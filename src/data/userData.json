@@ -1,0 +1,29 @@
+[
+  {
+    "id": 1,
+    "firstName": "John",
+    "lastName": "Doe",
+    "email": "john.doe@example.com",
+    "alternateEmail": "john.alternate@example.com",
+    "password": "$2b$10$cCBdjn6KHEwN9nvfO5b2XuslHsz.XZoexBqJDZBzBhmjL07fhud.S",
+    "age": "33"
+  },
+  {
+    "firstName": "Kiran",
+    "lastName": "jjk",
+    "email": "jnn@kjna.js",
+    "alternateEmail": "jnn@kjna.js",
+    "password": "$2b$10$VthkrpgRGJPnKGBNOZf4e.ccM4zmKa9/ulViBa59vhPp/f/Xv0XUy",
+    "age": "222",
+    "id": 2
+  },
+  {
+    "firstName": "kamklmklmk",
+    "lastName": "mlml",
+    "email": "mlkm@jkns.ljafm",
+    "alternateEmail": "mlkm@jkns.ljafm",
+    "password": "$2b$10$TBziO3x1tfnXPVTbAXz8begVvonKrzjZ1fsuQNW33cols03Mx6lUm",
+    "age": "222",
+    "id": 4
+  }
+]
