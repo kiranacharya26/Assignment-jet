@@ -1,29 +1,47 @@
 [
   {
-    "id": 1,
-    "firstName": "John",
-    "lastName": "Doe",
-    "email": "john.doe@example.com",
-    "alternateEmail": "john.alternate@example.com",
-    "password": "$2b$10$cCBdjn6KHEwN9nvfO5b2XuslHsz.XZoexBqJDZBzBhmjL07fhud.S",
-    "age": "33"
+    "id": 2,
+    "firstName": "Ishaa",
+    "lastName": "Patel",
+    "email": "isha.patel@example.com",
+    "alternateEmail": "isha.patel.alt@example.com",
+    "password": "$2b$10$zEZ3pNTv7hCy36z2xz8hHe8gAae5QpJwzKGB4kIuRdOaKiZRyIE3y",
+    "age": "26"
   },
   {
-    "firstName": "Kiran",
-    "lastName": "jjk",
-    "email": "jnn@kjna.js",
-    "alternateEmail": "jnn@kjna.js",
-    "password": "$2b$10$VthkrpgRGJPnKGBNOZf4e.ccM4zmKa9/ulViBa59vhPp/f/Xv0XUy",
-    "age": "222",
-    "id": 2
+    "id": 3,
+    "firstName": "Ravi",
+    "lastName": "Kumar",
+    "email": "ravi.kumar@example.com",
+    "alternateEmail": "ravi.kumar.alt@example.com",
+    "password": "$2b$10$GjPfRkbKxH8I.BfHgXEFz.n7UVu/hb6xT0hTIzNSrM.Wi3E5Fjb0i",
+    "age": "35"
   },
   {
-    "firstName": "kamklmklmk",
-    "lastName": "mlml",
-    "email": "mlkm@jkns.ljafm",
-    "alternateEmail": "mlkm@jkns.ljafm",
-    "password": "$2b$10$TBziO3x1tfnXPVTbAXz8begVvonKrzjZ1fsuQNW33cols03Mx6lUm",
-    "age": "222",
-    "id": 4
+    "id": 4,
+    "firstName": "Ananya",
+    "lastName": "Gowda",
+    "email": "ananya.gupta@example.com",
+    "alternateEmail": "ananya.gupta.alt@example.com",
+    "password": "$2b$10$LfWvGGIfKjNQX6iycFJQeO/RaI92.A8zVoU7B6D5s8/tJj7hxBGyS",
+    "age": "28"
+  },
+  {
+    "id": 5,
+    "firstName": "Ananya",
+    "lastName": "Singh",
+    "email": "arjun.singh@example.com",
+    "alternateEmail": "arjun.singh.alt@example.com",
+    "password": "$2b$10$Xf2PsmFZyH5gM9Y4x3y5F.f3/oG6PzUX8sZLl5t68mDGEW9aXuz2u",
+    "age": "28"
+  },
+  {
+    "firstName": "kjnakjnnj",
+    "lastName": "nknkj",
+    "email": "njnkj@jkna",
+    "alternateEmail": "njnkj@jkna",
+    "password": "$2b$10$G7L97bHN2pIHzwcfkfxOoOqZgC/1EnWbQh8rays2yOGsZ0zsFbq6C",
+    "age": "23",
+    "id": 6
   }
 ]
