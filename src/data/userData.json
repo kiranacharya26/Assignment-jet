@@ -24,7 +24,7 @@
     "email": "sanjay.kumar@example.com",
     "alternateEmail": "sanjay.kumar.alt@example.com",
     "password": "$2b$10$KkJjIiHhGgFfEeDdCcBbAaPpOoNn",
-    "age": "28"
+    "age": "26"
   },
   {
     "id": 10,
@@ -88,14 +88,5 @@
     "alternateEmail": "kiran.kumar.alt@example.com",
     "password": "$2b$10$ZzYyXxWwVvUuTtSsRrQqPpOoNnMm",
     "age": "34"
-  },
-  {
-    "firstName": "Kiran",
-    "lastName": "Acharya",
-    "email": "acharya.kiran26ka@gmail.com",
-    "alternateEmail": "acharya.kiran26ka@gmail.com",
-    "password": "$2b$10$cw8PdsQGc7R4GpZd8b6Sx.xav3.djRixMFwqwS/9YpPQ1TpGRLELW",
-    "age": "28",
-    "id": 17
   }
 ]

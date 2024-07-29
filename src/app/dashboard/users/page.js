@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, { useState, useEffect } from 'react';
 import Navbar from '../../components/Navbar';
 import UserList from '../../components/UserList';
@@ -9,12 +9,10 @@ function UserTablePage() {
   const [editingUser, setEditingUser] = useState(null);
   const [isAddingUser, setIsAddingUser] = useState(false);
 
-  // Fetch users when the component mounts
   useEffect(() => {
     fetchUsers();
   }, []);
 
-  // Fetch users from the API
   const fetchUsers = async () => {
     try {
       const response = await fetch('/api/users');
@@ -22,11 +20,10 @@ function UserTablePage() {
       const data = await response.json();
       setUsers(data);
     } catch (error) {
-      console.error('Error fetching users:', error);
+      // Handle error
     }
   };
 
-  // Handle adding or editing a user
   const handleAddOrEditUser = async (user) => {
     try {
       let response;
@@ -49,16 +46,15 @@ function UserTablePage() {
       if (editingUser) {
         setUsers(users.map(u => u.id === updatedUser.id ? updatedUser : u));
       } else {
-        setUsers([updatedUser, ...users]); // Prepend the new user to the list
+        setUsers([updatedUser, ...users]);
       }
       setEditingUser(null);
       setIsAddingUser(false);
     } catch (error) {
-      console.error('Error saving user:', error);
+      // Handle error
     }
   };
 
-  // Handle deleting a user
   const handleDeleteUser = async (id) => {
     try {
       const response = await fetch('/api/users', {
@@ -68,20 +64,17 @@ function UserTablePage() {
       });
       if (!response.ok) throw new Error('Failed to delete user');
       
-      // Update the users state to remove the deleted user
       setUsers(prevUsers => prevUsers.filter(user => user.id !== id));
     } catch (error) {
-      console.error('Error deleting user:', error);
+      // Handle error
     }
   };
 
-  // Handle click to edit a user
   const handleEditClick = (user) => {
     setEditingUser(user);
     setIsAddingUser(false);
   };
 
-  // Handle click to add a user
   const handleAddUserClick = () => {
     setEditingUser(null);
     setIsAddingUser(true);

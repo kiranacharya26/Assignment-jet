@@ -108,16 +108,12 @@ const UserList = ({ users, onEdit, onDelete }) => {
     const selectedIds = Object.keys(selectedRows).filter(id => selectedRows[id]);
     if (selectedIds.length === 0) return;
 
-    // Call onDelete for each selected user
     await Promise.all(selectedIds.map(id => onDelete(parseInt(id, 10))));
-
-    // Clear selection
     setSelectedRows({});
   };
 
   return (
     <div>
-      {/* Search Input */}
       <input
         type="text"
         value={globalFilter}
@@ -126,7 +122,6 @@ const UserList = ({ users, onEdit, onDelete }) => {
         className="border px-2 py-1 mb-4"
       />
 
-      {/* Multi-Delete Button */}
       {Object.keys(selectedRows).length > 0 && (
         <button
           onClick={handleDeleteSelected}
@@ -161,7 +156,6 @@ const UserList = ({ users, onEdit, onDelete }) => {
         </tbody>
       </table>
 
-      {/* Pagination Controls */}
       <div className="flex items-center mt-4">
         <button
           onClick={() => table.previousPage()}

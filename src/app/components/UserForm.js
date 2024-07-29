@@ -22,7 +22,7 @@ const UserForm = ({ onSave, user }) => {
     if (user) {
       setFormData({
         ...user,
-        password: '', // Keep password field blank on edit
+        password: '',
       });
     } else {
       setFormData({
