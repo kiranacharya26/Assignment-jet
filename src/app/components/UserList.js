@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   useReactTable,
   getCoreRowModel,
@@ -7,8 +7,24 @@ import {
   flexRender,
 } from '@tanstack/react-table';
 
-// Define columns
 const columns = [
+  {
+    id: 'select',
+    header: ({ table }) => (
+      <input
+        type="checkbox"
+        checked={table.getIsAllPageRowsSelected()}
+        onChange={table.getToggleAllPageRowsSelectedHandler()}
+      />
+    ),
+    cell: ({ row }) => (
+      <input
+        type="checkbox"
+        checked={row.getIsSelected()}
+        onChange={row.getToggleSelectedHandler()}
+      />
+    ),
+  },
   {
     accessorKey: 'firstName',
     header: 'First Name',
@@ -52,19 +68,20 @@ const columns = [
 ];
 
 const UserList = ({ users, onEdit, onDelete }) => {
-  const [globalFilter, setGlobalFilter] = React.useState('');
-  const [pagination, setPagination] = React.useState({
+  const [globalFilter, setGlobalFilter] = useState('');
+  const [pagination, setPagination] = useState({
     pageIndex: 0,
     pageSize: 5,
   });
+  const [selectedRows, setSelectedRows] = useState({});
 
-  // Create a table instance
   const table = useReactTable({
     data: users,
     columns,
     state: {
       globalFilter,
       pagination,
+      rowSelection: selectedRows,
     },
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
@@ -82,7 +99,21 @@ const UserList = ({ users, onEdit, onDelete }) => {
       onDelete,
     },
     onPaginationChange: setPagination,
+    onRowSelectionChange: setSelectedRows,
+    getRowId: row => row.id,
+    enableRowSelection: true,
   });
+
+  const handleDeleteSelected = async () => {
+    const selectedIds = Object.keys(selectedRows).filter(id => selectedRows[id]);
+    if (selectedIds.length === 0) return;
+
+    // Call onDelete for each selected user
+    await Promise.all(selectedIds.map(id => onDelete(parseInt(id, 10))));
+
+    // Clear selection
+    setSelectedRows({});
+  };
 
   return (
     <div>
@@ -91,9 +122,19 @@ const UserList = ({ users, onEdit, onDelete }) => {
         type="text"
         value={globalFilter}
         onChange={(e) => setGlobalFilter(e.target.value)}
-        placeholder="Search..."
+        placeholder="Search by name, age .."
         className="border px-2 py-1 mb-4"
       />
+
+      {/* Multi-Delete Button */}
+      {Object.keys(selectedRows).length > 0 && (
+        <button
+          onClick={handleDeleteSelected}
+          className="bg-red-500 text-white py-2 px-4 rounded mb-4"
+        >
+          Delete Selected
+        </button>
+      )}
 
       <table className="min-w-full bg-white">
         <thead>
@@ -123,7 +164,7 @@ const UserList = ({ users, onEdit, onDelete }) => {
       {/* Pagination Controls */}
       <div className="flex items-center mt-4">
         <button
-          onClick={() => table.setPageIndex(old => Math.max(0, old - 1))}
+          onClick={() => table.previousPage()}
           disabled={!table.getCanPreviousPage()}
           className="px-4 py-2 bg-gray-300"
         >
@@ -133,7 +174,7 @@ const UserList = ({ users, onEdit, onDelete }) => {
           Page {table.getState().pagination.pageIndex + 1} of {table.getPageCount()}
         </span>
         <button
-          onClick={() => table.setPageIndex(old => Math.min(table.getPageCount() - 1, old + 1))}
+          onClick={() => table.nextPage()}
           disabled={!table.getCanNextPage()}
           className="px-4 py-2 bg-gray-300"
         >
