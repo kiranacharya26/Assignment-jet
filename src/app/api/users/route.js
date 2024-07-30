@@ -66,9 +66,24 @@ export async function PUT(req) {
 }
 
 export async function DELETE(req) {
-  const { id } = await req.json();
-  let users = readUserData();
-  users = users.filter(user => user.id !== id);
-  writeUserData(users);
-  return NextResponse.json({ message: 'User deleted' });
+  try {
+    const { id } = await req.json();
+    if (!id) {
+      return NextResponse.json({ error: 'No ID provided' }, { status: 400 });
+    }
+
+    let users = readUserData();
+    const userExists = users.some(user => user.id === id);
+    if (!userExists) {
+      return NextResponse.json({ error: 'User not found' }, { status: 404 });
+    }
+
+    users = users.filter(user => user.id !== id);
+    writeUserData(users);
+    return NextResponse.json({ message: 'User deleted' });
+  } catch (error) {
+    console.error('Error in DELETE handler:', error);
+    return NextResponse.json({ error: 'Failed to delete user' }, { status: 500 });
+  }
 }
+
