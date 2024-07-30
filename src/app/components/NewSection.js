@@ -7,14 +7,9 @@ const NewSection = () => {
   const [imageIndex, setImageIndex] = useState(0);
   const [isFixed, setIsFixed] = useState(true);
 
-  // Array of image paths
   const images = [
     '/images/01hero.jpg',
     '/images/02hero.jpg',
-    '/images/03hero.jpg',
-    '/images/04hero.jpg',
-    '/images/05hero.jpg',
-    // Add more images as needed
   ];
 
   useEffect(() => {
@@ -24,8 +19,6 @@ const NewSection = () => {
       const sectionTop = section.offsetTop;
       const sectionHeight = section.clientHeight;
       const windowHeight = window.innerHeight;
-
-      // Update image index
       const newImageIndex = Math.min(
         Math.floor(scrollTop / windowHeight),
         images.length - 1
@@ -33,8 +26,6 @@ const NewSection = () => {
       if (newImageIndex !== imageIndex) {
         setImageIndex(newImageIndex);
       }
-
-      // Check if the section is scrolled past its top
       if (scrollTop >= sectionTop + sectionHeight) {
         setIsFixed(false);
       } else {
