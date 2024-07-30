@@ -1,25 +1,31 @@
 import { NextResponse } from 'next/server';
 import bcrypt from 'bcrypt';
 
-const baseUrl = 'https://api.jsonbin.io/v3/b/66a93245ad19ca34f88f1836';
-const apiKey = '$2a$10$oFftgiA2qSeS5TTGmstIrO9TDZceuNbCAfmuMzCeTphMEKUD5iZl6';
+const baseUrl = 'https://api.jsonbin.io/v3/b/66a93853ad19ca34f88f1a6e';
+const apiKey = '$2a$10$i7kgDGCboFcwBqcLt8RCh.PfSkJJAn6IgECNDQQg4Fhwk9grAk28.';
 
 export async function GET() {
   try {
     const response = await fetch(baseUrl, {
       headers: { 'secret-key': apiKey },
     });
+    
     if (!response.ok) {
+      const errorText = await response.text();
       console.error(`GET request failed with status: ${response.status}`);
-      throw new Error('Failed to fetch data');
+      console.error(`Error details: ${errorText}`);
+      return NextResponse.json({ error: 'Failed to fetch users', details: errorText }, { status: 500 });
     }
+
     const data = await response.json();
     return NextResponse.json(data);
   } catch (error) {
     console.error('Error fetching users:', error);
-    return NextResponse.json({ error: 'Failed to fetch users' }, { status: 500 });
+    return NextResponse.json({ error: 'Failed to fetch users', details: error.message }, { status: 500 });
   }
 }
+
+
 
 export async function POST(req) {
   try {
