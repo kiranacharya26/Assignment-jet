@@ -1,14 +1,5 @@
 [
   {
-    "id": 7,
-    "firstName": "Rakesh",
-    "lastName": "Sharma",
-    "email": "rakesh.sharma@example.com",
-    "alternateEmail": "rakesh.sharma.alt@example.com",
-    "password": "$2b$10$AaBbCcDdEeFfGgHhIiJjKkLmNoPqR",
-    "age": "30"
-  },
-  {
     "id": 8,
     "firstName": "Ananya",
     "lastName": "Rao",
