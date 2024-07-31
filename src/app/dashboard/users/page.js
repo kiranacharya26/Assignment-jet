@@ -3,17 +3,20 @@ import React, { useState, useEffect } from 'react';
 import Navbar from '../../components/Navbar';
 import UserList from '../../components/UserList';
 import UserForm from '../../components/UserForm';
+import Loader from '../../components/Loader';
 
 function UserTablePage() {
   const [users, setUsers] = useState([]);
   const [editingUser, setEditingUser] = useState(null);
   const [isAddingUser, setIsAddingUser] = useState(false);
+  const [loadingUsers, setLoadingUsers] = useState(true); // Loading state for table
 
   useEffect(() => {
     fetchUsers();
   }, []);
 
   const fetchUsers = async () => {
+    setLoadingUsers(true); // Set loading to true when fetching starts
     try {
       const response = await fetch('/api/users');
       if (!response.ok) throw new Error('Failed to fetch users');
@@ -21,6 +24,8 @@ function UserTablePage() {
       setUsers(data);
     } catch (error) {
       // Handle error
+    } finally {
+      setLoadingUsers(false); // Set loading to false once fetching completes
     }
   };
 
@@ -98,7 +103,11 @@ function UserTablePage() {
           </div>
         </header>
         <main className="mt-6">
-          <UserList users={users} onEdit={handleEditClick} onDelete={handleDeleteUser} />
+          {loadingUsers ? (
+            <Loader /> // Show loader while fetching users
+          ) : (
+            <UserList users={users} onEdit={handleEditClick} onDelete={handleDeleteUser} />
+          )}
           {(editingUser || isAddingUser) && (
             <UserForm
               onSave={handleAddOrEditUser}
