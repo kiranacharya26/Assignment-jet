@@ -1,53 +1,39 @@
-'use client'
+'use client';
 import Image from 'next/image';
-import styles from './style.module.css';
 import { useTransform, useScroll, motion } from 'framer-motion';
 import { useRef } from 'react';
 
-const Card = ({i, title, description, src, url, color, progress, range, targetScale}) => {
-const container = useRef(null);
+const Card = ({ i, src, color, progress, range, targetScale }) => {
+  const container = useRef(null);
   const { scrollYProgress } = useScroll({
     target: container,
     offset: ['start end', 'start start']
-  })
-  const imageScale = useTransform(scrollYProgress, [0, 1], [2, 1])
+  });
+  const imageScale = useTransform(scrollYProgress, [0, 1], [2, 1]);
   const scale = useTransform(progress, range, [1, targetScale]);
-  return (
-    <div className={styles.cardContainer}>
-      <div 
-        className={styles.card}
-        style={{backgroundColor: color,scale, top:`calc(-5vh + ${i * 25}px)`}}
-      >
-        <h2>{title}</h2>
-        <div className={styles.body}>
-          <div className={styles.description}>
-            <p>{description}</p>
-            <span>
-              <a href={url} target="_blank">See more</a>
-              <svg width="22" height="12" viewBox="0 0 22 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M21.5303 6.53033C21.8232 6.23744 21.8232 5.76256 21.5303 5.46967L16.7574 0.696699C16.4645 0.403806 15.9896 0.403806 15.6967 0.696699C15.4038 0.989592 15.4038 1.46447 15.6967 1.75736L19.9393 6L15.6967 10.2426C15.4038 10.5355 15.4038 11.0104 15.6967 11.3033C15.9896 11.5962 16.4645 11.5962 16.7574 11.3033L21.5303 6.53033ZM0 6.75L21 6.75V5.25L0 5.25L0 6.75Z" fill="black"/>
-              </svg>
-            </span>
-          </div>
 
-          <div className={styles.imageContainer}>
-            <motion.div
-              className={styles.inner}
-              style={{scale: imageScale}}
-            >
-              <Image
-                fill
-                src={`/images/${src}`}
-                alt="image" 
-              />
-            </motion.div>
-          </div>
+  return (
+    <div className="h-screen w-screen flex items-center justify-center sticky top-0 m-0 p-0 bg-black">
+      <div
+        className={`relative h-screen w-screen rounded-none p-0 transform-origin-top`}
+        style={{ scale, top: `calc(-5vh + ${i * 0}px)` }} // Adjust the top to 0 to remove gaps
+      >
+        <div className="relative w-full h-full rounded-none overflow-hidden">
+          <motion.div
+            className="w-full h-full"
+            style={{ scale: imageScale }}
+          >
+            <Image
+              fill
+              src={`/images/${src}`}
+              alt="image"
+              className="object-cover"
+            />
+          </motion.div>
         </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default Card
-
-
+export default Card;
