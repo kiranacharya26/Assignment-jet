@@ -9,6 +9,7 @@ const DashboardPage = () => {
       <Navbar />
       <HeroSection/>
       <ScrollableList/>
+      
     </div>
   );
 };

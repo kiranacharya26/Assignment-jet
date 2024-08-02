@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion, useAnimation } from 'framer-motion';
 import ListItem from './ListItem';
+import Footer from './Footer';
 
 const ScrollableList = () => {
   const containerRef = useRef(null);
@@ -56,13 +57,13 @@ const ScrollableList = () => {
   }, [isScrolledPast, scrollableControls, footerControls]);
 
   return (
-    <div className="relative">
+    <div className="relative min-h-screen">
       <motion.div
         className="sticky top-0 left-0 right-0 bg-black text-gray-500"
         animate={scrollableControls}
         initial={{ opacity: 1, y: '0%' }}
         style={{ 
-          height: '100vh', 
+          height: 'calc(100vh - 4rem)', // Adjust this value if needed
           overflowY: 'scroll', 
           display: 'flex', 
           flexDirection: 'column',
@@ -71,7 +72,7 @@ const ScrollableList = () => {
       >
         <div
           ref={containerRef}
-          className="flex-grow"
+          className="flex-grow pb-16" // Add padding-bottom to ensure footer is visible
         >
           {items.map((item, index) => (
             <ListItem key={index} index={index} totalItems={items.length}>
@@ -83,14 +84,7 @@ const ScrollableList = () => {
         </div>
       </motion.div>
 
-      <motion.footer
-        className="absolute bottom-0 left-0 right-0 bg-blue-500 text-white text-center py-4"
-        animate={footerControls}
-        initial={{ opacity: 0, y: '100%' }}
-        style={{ transition: 'opacity 0.5s ease, transform 0.5s ease' }}
-      >
-        <p>© 2024 Your Company. All rights reserved.</p>
-      </motion.footer>
+     
     </div>
   );
 };
