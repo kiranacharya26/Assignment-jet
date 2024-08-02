@@ -1,5 +1,8 @@
-"use client";
+// src/app/dashboard/users/page.js
+"use client"
 import React, { useState, useEffect } from 'react';
+import { QueryClientProvider } from '@tanstack/react-query';
+import queryClient from '../../../lib/queryClient';
 import Navbar from '../../components/Navbar';
 import UserList from '../../components/UserList';
 import UserForm from '../../components/UserForm';
@@ -9,14 +12,14 @@ function UserTablePage() {
   const [users, setUsers] = useState([]);
   const [editingUser, setEditingUser] = useState(null);
   const [isAddingUser, setIsAddingUser] = useState(false);
-  const [loadingUsers, setLoadingUsers] = useState(true); // Loading state for table
+  const [loadingUsers, setLoadingUsers] = useState(true);
 
   useEffect(() => {
     fetchUsers();
   }, []);
 
   const fetchUsers = async () => {
-    setLoadingUsers(true); // Set loading to true when fetching starts
+    setLoadingUsers(true);
     try {
       const response = await fetch('/api/users');
       if (!response.ok) throw new Error('Failed to fetch users');
@@ -25,7 +28,7 @@ function UserTablePage() {
     } catch (error) {
       // Handle error
     } finally {
-      setLoadingUsers(false); // Set loading to false once fetching completes
+      setLoadingUsers(false);
     }
   };
 
@@ -86,37 +89,39 @@ function UserTablePage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100">
-      <Navbar />
-      <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-        <header className="bg-white shadow">
-          <div className="py-6 px-4 sm:px-6 lg:px-8 flex justify-between items-center">
-            <h1 className="text-3xl font-bold text-gray-900">User List</h1>
-            {!editingUser && !isAddingUser && (
-              <button
-                onClick={handleAddUserClick}
-                className="bg-blue-500 text-white py-2 px-4 rounded"
-              >
-                Add User
-              </button>
+    <QueryClientProvider client={queryClient}>
+      <div className="min-h-screen bg-gray-100">
+        <Navbar />
+        <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+          <header className="bg-white shadow">
+            <div className="py-6 px-4 sm:px-6 lg:px-8 flex justify-between items-center">
+              <h1 className="text-3xl font-bold text-gray-900">User List</h1>
+              {!editingUser && !isAddingUser && (
+                <button
+                  onClick={handleAddUserClick}
+                  className="bg-blue-500 text-white py-2 px-4 rounded"
+                >
+                  Add User
+                </button>
+              )}
+            </div>
+          </header>
+          <main className="mt-6">
+            {loadingUsers ? (
+              <Loader />
+            ) : (
+              <UserList users={users} onEdit={handleEditClick} onDelete={handleDeleteUser} />
             )}
-          </div>
-        </header>
-        <main className="mt-6">
-          {loadingUsers ? (
-            <Loader /> // Show loader while fetching users
-          ) : (
-            <UserList users={users} onEdit={handleEditClick} onDelete={handleDeleteUser} />
-          )}
-          {(editingUser || isAddingUser) && (
-            <UserForm
-              onSave={handleAddOrEditUser}
-              user={editingUser}
-            />
-          )}
-        </main>
+            {(editingUser || isAddingUser) && (
+              <UserForm
+                onSave={handleAddOrEditUser}
+                user={editingUser}
+              />
+            )}
+          </main>
+        </div>
       </div>
-    </div>
+    </QueryClientProvider>
   );
 }
 
