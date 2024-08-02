@@ -47,7 +47,9 @@ export async function POST(req) {
     const currentData = await currentDataResponse.json();
     const users = extractUserData(currentData);
 
-    newUser.id = users.length ? users[users.length - 1].id + 1 : 1;
+    // Assign a unique ID to the new user
+    newUser.id = users.length ? Math.max(users.map(user => user.id)) + 1 : 1;
+
     const updatedData = [...users, newUser];
 
     const updateResponse = await fetch(baseUrl, {
@@ -61,11 +63,14 @@ export async function POST(req) {
     if (!updateResponse.ok) {
       throw new Error('Failed to update data');
     }
+    
+    // Return the newly created user with its ID
     return NextResponse.json(newUser);
   } catch (error) {
     return NextResponse.json({ error: 'Failed to add user' }, { status: 500 });
   }
 }
+
 
 export async function PUT(req) {
   try {

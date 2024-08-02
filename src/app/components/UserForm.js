@@ -22,7 +22,7 @@ const UserForm = ({ onSave, user }) => {
     if (user) {
       setFormData({
         ...user,
-        password: '',
+        password: '', // Reset password field for security
       });
     } else {
       setFormData({
@@ -31,7 +31,7 @@ const UserForm = ({ onSave, user }) => {
         email: '',
         alternateEmail: '',
         password: '',
-        age: 18,
+        age: 19,
       });
     }
   }, [user]);
@@ -42,10 +42,15 @@ const UserForm = ({ onSave, user }) => {
     if (!formData.lastName.trim()) newErrors.lastName = 'Last name is required';
     if (!formData.email.trim()) newErrors.email = 'Email is required';
     if (!formData.alternateEmail.trim()) newErrors.alternateEmail = 'Alternate email is required';
-    if (formData.age < 18) newErrors.age = 'Age must be 18 or older';
+    if (formData.age < 18) {
+  newErrors.age = 'Age must be older 18 or older';
+} else if (formData.age > 100) {
+  newErrors.age = 'Age must be 100 or younger';
+}
+
 
     setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
+    return Object.keys(newErrors).length === 0; 
   };
 
   const handleChange = (e) => {
@@ -56,7 +61,10 @@ const UserForm = ({ onSave, user }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validateForm()) {
-      onSave(formData);
+      onSave({
+        ...formData,
+        id: user ? user.id : undefined, 
+      });
     }
   };
 
@@ -155,6 +163,3 @@ const UserForm = ({ onSave, user }) => {
 };
 
 export default UserForm;
-
-
-
