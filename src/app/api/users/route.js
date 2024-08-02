@@ -85,10 +85,11 @@ export async function PUT(req) {
       return NextResponse.json({ error: 'User not found' }, { status: 404 });
     }
 
+    // Update user data
     if (updatedUser.password) {
       updatedUser.password = await bcrypt.hash(updatedUser.password, 10);
     } else {
-      updatedUser.password = users[index].password;
+      updatedUser.password = users[index].password; // Keep the same password if not provided
     }
     users[index] = { ...users[index], ...updatedUser };
 
@@ -103,15 +104,21 @@ export async function PUT(req) {
     if (!response.ok) {
       throw new Error('Failed to update data');
     }
-    return NextResponse.json(users[index]);
+
+    return NextResponse.json(users[index]); // Return the updated user
   } catch (error) {
     return NextResponse.json({ error: 'Failed to update user' }, { status: 500 });
   }
 }
 
+
+
 export async function DELETE(req) {
   try {
     const { id } = await req.json();
+
+    // Convert id to a number if necessary
+    const userId = parseInt(id, 10);
 
     const currentDataResponse = await fetch(baseUrl, {
       headers: { 'secret-key': apiKey },
@@ -122,7 +129,10 @@ export async function DELETE(req) {
     const currentData = await currentDataResponse.json();
     const users = extractUserData(currentData);
 
-    const updatedData = users.filter(user => user.id !== id);
+    // Filter out the user with the specified ID
+    const updatedData = users.filter(user => user.id !== userId);
+console.log('Users after deletion attempt:', updatedData); // Log the updated user data
+
 
     const response = await fetch(baseUrl, {
       method: 'PUT',
